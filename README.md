@@ -6,6 +6,19 @@ The [Twitter Bootstrap framework](https://github.com/twbs/bootstrap) and RTL ver
 
 - Install with [npm](https://www.npmjs.com/): `npm install bootstrap-with-rtl`
 
+## What's included
+```
+dist/
+├── css/
+│   ├── bootstrap.css
+│   ├── bootstrap.min.css
+│   ├── bootstrap.rtl.css
+│   ├── bootstrap.rtl.min.css
+└── js/
+    ├── bootstrap.js
+    └── bootstrap.min.js
+```
+
 ## Notes
 
 - It's currently in test phase.
