@@ -61,9 +61,10 @@
     ".rtlcssrc.json",
     "build",
     "dist",
-    "js/**/*.js",
-    "js/**/*.js.map",
-    "scss/**/*.scss"
+    "js",
+    "scss",
+    "tasks",
+    "gulpfile.js"
   ],
   "browserslist": [
     "Chrome >= 45",
