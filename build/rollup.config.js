@@ -19,12 +19,11 @@ const plugins = [
   })
 ]
 const globals = {
-  jquery: 'jQuery', // ensure we use jQuery which is always available even in noConflict mode
+  jquery: '$',
   'popper.js': 'Popper'
 }
 
 module.exports = {
-  rollup: require('rollup'),
   input: path.resolve(__dirname, '../js/src/index.js'),
   format: 'iife',
   name: 'bootstrap',

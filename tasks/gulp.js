@@ -1,5 +1,5 @@
 const gulp          = require('gulp');
-const pump          = require('pump');
+const plumber       = require('gulp-plumber');
 const path          = require('path');
 const sequence      = require('run-sequence')
 const del           = require('del');
@@ -51,7 +51,7 @@ module.exports = {
 
     if (config.createJsTasks) {
       gulp.task(config.tasksNamePrefix + 'build:js', _.bind(this['build:js'], {}, config));
-      gulp.task(config.tasksNamePrefix + 'build:js-ltr', _.bind(this['build:js-ltr'], {}, config));
+      gulp.task(config.tasksNamePrefix + 'build:js-ltr', _.bind(this['build:js-ltr'], {}, _, config));
       gulp.task(config.tasksNamePrefix + 'clean:js', _.bind(this['clean:js'], {}, config));
     }
   },
@@ -105,19 +105,18 @@ module.exports = {
   'build:js': function (config) {
     sequence(config.tasksNamePrefix + 'clean:js', config.tasksNamePrefix + 'build:js-ltr');
   },
-  'build:js-ltr': function (config) {
-    return pump([
-      gulp.src(path.resolve(__dirname, '..') + '/**/*.js'),
-      rollup(config.rollupConfig),
-      rename({
+  'build:js-ltr': function (callback, config) {
+    return gulp.src(path.resolve(__dirname, '..') + '/**/*.js')
+      .pipe(plumber())
+      .pipe(rollup(config.rollupConfig))
+      .pipe(rename({
         dirname: config.jsDist,
         basename: "bootstrap",
-      }),
-      gulp.dest('.'),
-      rename({ suffix: '.min' }),
-      uglify(config.uglifyConfig),
-      gulp.dest('.')
-    ]);
+      }))
+      .pipe(gulp.dest('.'))
+      .pipe(rename({ suffix: '.min' }))
+      .pipe(uglify(config.uglifyConfig))
+      .pipe(gulp.dest('.'))
   },
   'clean:js': function (config) {
     return del([config.jsDist + '/*']);
