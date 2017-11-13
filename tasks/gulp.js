@@ -26,7 +26,6 @@ module.exports = {
       outputStyle: 'expanded',
       precision: 6
     },
-    cssCleanRegex: [path.resolve(__dirname, '../dist/css') + '/*'],
 
     rollupConfig: require(path.resolve(__dirname, '../build/rollup.config')),
     jsDist: path.resolve(__dirname, '../dist/js'),
@@ -38,7 +37,6 @@ module.exports = {
         comments: '/^!/'
       }
     },
-    jsCleanRegex: [path.resolve(__dirname, '../dist/js') + '/*'],
   },
 
   'registerTasks': function (gulp, config) {
@@ -88,7 +86,7 @@ module.exports = {
       .pipe(gulp.dest(config.cssDist));
   },
   'clean:css': function (config) {
-    return del(config.cssCleanRegex);
+    return del([config.cssDist + '/*']);
   },
 
   'build:js': function (config) {
@@ -109,6 +107,6 @@ module.exports = {
     ]);
   },
   'clean:js': function (config) {
-    return del(config.jsCleanRegex);
+    return del([config.jsDist + '/*']);
   }
 };
