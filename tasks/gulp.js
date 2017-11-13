@@ -27,7 +27,7 @@ module.exports = {
     },
     cssCleanRegex: [path.resolve(__dirname, '../dist/css') + '/*'],
 
-    rollupConfig: require('../build/rollup.config'),
+    rollupConfig: require(path.resolve(__dirname, '../build/rollup.config')),
     jsDist: path.resolve(__dirname, '../dist/js'),
     uglifyConfig: {
       compress: {
