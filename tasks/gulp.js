@@ -1,4 +1,5 @@
 const gulp          = require('gulp');
+const pump          = require('pump');
 const path          = require('path');
 const sequence      = require('run-sequence')
 const del           = require('del');
@@ -94,16 +95,18 @@ module.exports = {
     sequence(config.tasksNamePrefix + 'clean:js', config.tasksNamePrefix + 'build:js-ltr');
   },
   'build:js-ltr': function (config) {
-    return gulp.src(path.resolve(__dirname, '..') + '/**/*.js')
-      .pipe(rollup(config.rollupConfig))
-      .pipe(rename({
+    return pump([
+      gulp.src(path.resolve(__dirname, '..') + '/**/*.js'),
+      rollup(config.rollupConfig),
+      rename({
         dirname: config.jsDist,
         basename: "bootstrap",
-      }))
-      .pipe(gulp.dest('.'))
-      .pipe(rename({ suffix: '.min' }))
-      .pipe(uglify(config.uglifyConfig))
-      .pipe(gulp.dest('.'));
+      }),
+      gulp.dest('.'),
+      rename({ suffix: '.min' }),
+      uglify(config.uglifyConfig),
+      gulp.dest('.')
+    ]);
   },
   'clean:js': function (config) {
     return del(config.jsCleanRegex);
