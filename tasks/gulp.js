@@ -94,7 +94,7 @@ module.exports = {
     sequence(config.tasksNamePrefix + 'clean:js', config.tasksNamePrefix + 'build:js-ltr');
   },
   'build:js-ltr': function (config) {
-    return gulp.src('./**/*.js')
+    return gulp.src(path.resolve(__dirname, '..') + '/**/*.js')
       .pipe(rollup(config.rollupConfig))
       .pipe(rename({
         dirname: config.jsDist,
