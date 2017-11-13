@@ -27,6 +27,7 @@ module.exports = {
       precision: 6
     },
 
+    createJsTasks: false,
     rollupConfig: require(path.resolve(__dirname, '../build/rollup.config')),
     jsDist: path.resolve(__dirname, '../dist/js'),
     uglifyConfig: {
@@ -54,10 +55,20 @@ module.exports = {
   },
 
   'build': function (config) {
-    sequence([config.tasksNamePrefix + 'build:css', config.tasksNamePrefix + 'build:js']);
+    const tasks = [config.tasksNamePrefix + 'build:css'];
+    if (config.createJsTasks) {
+      tasks.push(config.tasksNamePrefix + 'build:js');
+    }
+
+    sequence(tasks);
   },
   'clean': function (config) {
-    sequence([config.tasksNamePrefix + 'clean:css', config.tasksNamePrefix + 'clean:js']);
+    const tasks = [config.tasksNamePrefix + 'clean:css'];
+    if (config.createJsTasks) {
+      tasks.push(config.tasksNamePrefix + 'clean:js');
+    }
+
+    sequence(tasks);
   },
 
   'build:css': function (config) {
