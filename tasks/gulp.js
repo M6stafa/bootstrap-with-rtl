@@ -49,9 +49,11 @@ module.exports = {
     gulp.task(config.tasksNamePrefix + 'build:css-rtl', _.bind(this['build:css-rtl'], {}, config));
     gulp.task(config.tasksNamePrefix + 'clean:css', _.bind(this['clean:css'], {}, config));
 
-    gulp.task(config.tasksNamePrefix + 'build:js', _.bind(this['build:js'], {}, config));
-    gulp.task(config.tasksNamePrefix + 'build:js-ltr', _.bind(this['build:js-ltr'], {}, config));
-    gulp.task(config.tasksNamePrefix + 'clean:js', _.bind(this['clean:js'], {}, config));
+    if (config.createJsTasks) {
+      gulp.task(config.tasksNamePrefix + 'build:js', _.bind(this['build:js'], {}, config));
+      gulp.task(config.tasksNamePrefix + 'build:js-ltr', _.bind(this['build:js-ltr'], {}, config));
+      gulp.task(config.tasksNamePrefix + 'clean:js', _.bind(this['clean:js'], {}, config));
+    }
   },
 
   'build': function (config) {
