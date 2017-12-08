@@ -53,10 +53,7 @@ module.exports = {
 
     // CSS Tasks
     gulp.task(config.tasksNamePrefix + 'build:css', function (callback) {
-      sequence(config.tasksNamePrefix + 'clean:css',
-        config.tasksNamePrefix + 'build:css-ltr',
-        config.tasksNamePrefix + 'build:css-rtl'
-      )(callback);
+      sequence(config.tasksNamePrefix + 'build:css-ltr', config.tasksNamePrefix + 'build:css-rtl')(callback);
     });
     gulp.task(config.tasksNamePrefix + 'build:css-ltr', _.bind(this['build:css-ltr'], {}, config));
     gulp.task(config.tasksNamePrefix + 'build:css-rtl', _.bind(this['build:css-rtl'], {}, config));
@@ -65,7 +62,7 @@ module.exports = {
     // JS Tasks
     if (config.createJsTasks) {
       gulp.task(config.tasksNamePrefix + 'build:js', function (callback) {
-        sequence(config.tasksNamePrefix + 'clean:js', config.tasksNamePrefix + 'build:js-ltr')(callback);
+        sequence(config.tasksNamePrefix + 'build:js-ltr')(callback);
       });
       gulp.task(config.tasksNamePrefix + 'build:js-ltr', _.bind(this['build:js-ltr'], {}, _, config));
       gulp.task(config.tasksNamePrefix + 'clean:js', _.bind(this['clean:js'], {}, config));
