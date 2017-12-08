@@ -48,25 +48,25 @@ module.exports = {
       buildTasks.push(config.tasksNamePrefix + 'build:js');
       cleanTasks.push(config.tasksNamePrefix + 'clean:js');
     }
-    gulp.task(config.tasksNamePrefix + 'build', sequence(buildTasks));
-    gulp.task(config.tasksNamePrefix + 'clean', sequence(cleanTasks));
+    gulp.task(config.tasksNamePrefix + 'build', function (callback) { sequence(buildTasks)(callback); });
+    gulp.task(config.tasksNamePrefix + 'clean', function (callback) { sequence(cleanTasks)(callback); });
 
     // CSS Tasks
-    gulp.task(config.tasksNamePrefix + 'build:css', sequence(
-      config.tasksNamePrefix + 'clean:css',
-      config.tasksNamePrefix + 'build:css-ltr',
-      config.tasksNamePrefix + 'build:css-rtl'
-    ));
+    gulp.task(config.tasksNamePrefix + 'build:css', function (callback) {
+      sequence(config.tasksNamePrefix + 'clean:css',
+        config.tasksNamePrefix + 'build:css-ltr',
+        config.tasksNamePrefix + 'build:css-rtl'
+      )(callback);
+    });
     gulp.task(config.tasksNamePrefix + 'build:css-ltr', _.bind(this['build:css-ltr'], {}, config));
     gulp.task(config.tasksNamePrefix + 'build:css-rtl', _.bind(this['build:css-rtl'], {}, config));
     gulp.task(config.tasksNamePrefix + 'clean:css', _.bind(this['clean:css'], {}, config));
 
     // JS Tasks
     if (config.createJsTasks) {
-      gulp.task(config.tasksNamePrefix + 'build:js', sequence(
-        config.tasksNamePrefix + 'clean:js',
-        config.tasksNamePrefix + 'build:js-ltr'
-      ));
+      gulp.task(config.tasksNamePrefix + 'build:js', function (callback) {
+        sequence(config.tasksNamePrefix + 'clean:js', config.tasksNamePrefix + 'build:js-ltr')(callback);
+      });
       gulp.task(config.tasksNamePrefix + 'build:js-ltr', _.bind(this['build:js-ltr'], {}, _, config));
       gulp.task(config.tasksNamePrefix + 'clean:js', _.bind(this['clean:js'], {}, config));
     }
